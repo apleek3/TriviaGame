@@ -2,15 +2,15 @@ var triviaQuestions = [
 
     {
         question: "Sacramento, CA is the ________ of California",
-        answersList: ["Capital", "bootstrap", "Norcal capital", "hodgepodge"],
+        answersList: ["Capitol", "Butt", "Hat", "Bulk"],
         answer: 0,
     }, {
-        question: "Sacramento is California's _______ capitol",
-        answersList: ["second", "fourth", "sixth", "eighth"],
+        question: "Sacramento is California's _______ Capitol",
+        answersList: ["2nd", "4th", "6th", "8th"],
         answer: 2,
     }, {
         question: "Sacramento is home to the original Pony Express. A system designed for the expansive delivery of ________",
-        answersList: ["Ponies", "Candygrams", "Mail", "Pizza"],
+        answersList: ["Ponies", "Candygrams", "Mail", "Pizzas"],
         answer: 2,
     }, {
         question: "Sacramento's climate is considered _________.",
@@ -21,13 +21,13 @@ var triviaQuestions = [
         answersList: ["Legislation", "Almonds", "Trout", "Torgo's Executive Powder"],
         answer: 1,
     }, {
-        question: "Numerous attactions and animals can be viewed at for an entrance fee at __________.",
-        answersList: ["the Sacramento Zoo", "the Capital Building", "the Golden One Arena", "Raley Field"],
+        question: "Numerous attactions and animals can be viewed at __________ following a modest entrance fee.",
+        answersList: ["the Sacramento Zoo", "the Capitol Building", "the Golden One Arena", "Raley Field"],
         answer: 0,
     }, {
-        question: "Sacramento's notable nickname's include: ",
+        question: "Sacramento's notable nicknames include: ",
         answersList: ["the City of Trees", "River City", "Sactown", "All of the Above"],
-        answer: 4,
+        answer: 3,
     }
 
 ]
@@ -43,8 +43,8 @@ var answered;
 var userSelect;
 
 var messages = {
-    correct: "Yarp!",
-    incorrect: "Narp.",
+    correct: "You got it!",
+    incorrect: "Nope. Do you even Nor-Cal?",
     endTime: "Missed it by THAT much!",
     finished: "How did you do?"
 }
@@ -56,22 +56,19 @@ $(document).ready(function () {
 
     $("#startBtn").click(function () {
         $(this).hide(); //game has started. Hide the button
-        $("#resetBtn").show(); //make the reset button available any time        
         $(".answerList").show();
         startGame();
-        
-       
-        
     });
 
     $("#resetBtn").click(function () { //hides all new messages, divs, and timer to restart the game
         $(this).hide();
-        $("#startBtn").show();        
-        $(".answerList").hide();
+        $("#startBtn").show();
+        $(".answerList").empty();
         clearInterval(time);
-        $("#timeLeft").hide();
-        $(".question").hide();
-        $("#currentQuestion").hide();
+        $("#timeLeft").empty();
+        $(".question").empty();
+        $("#currentQuestion").empty();
+        $("#scoreboard").empty();
     });
 
     function startGame() {
@@ -86,106 +83,101 @@ $(document).ready(function () {
         newQuestion();
     }
 
-    function newQuestion() {
-        $("#message").empty();
-        $("#correctedAnswer").empty();
-        //$("#gif").empty()
-        answered = true;
+        function newQuestion() {
+            $("#message").empty();
+            $("#correctedAnswer").empty();
+            //$("#gif").empty()
+            answered = true;
 
-        //sets up new question & answersList
-        $("#currentQuestion").show();
-        $("#currentQuestion").html("Question # " + (currentQuestion + 1) + " of " + triviaQuestions.length);
-        $(".question").show()
-        $(".question").html("<h2>" + triviaQuestions[currentQuestion].question + "</h2>");
-        for (var i = 0; i < 4; i++) {         
-          var choices = $("<input>");
-            choices.text(triviaQuestions[currentQuestion].answersList[i]);
-            choices.attr({ "data-index": i }); //counts off 4 buttons using the for loop
-            choices.addClass("thisChoice"); //adds a class which connects the user to their choice in the countdown bleow
-            choices.addClass("btn btn-secondary"); // adds bootstrap button styling
+            //sets up new question & answersList
+            $("#currentQuestion").show();
+            $("#currentQuestion").html("Question # " + (currentQuestion + 1) + " of " + triviaQuestions.length);
+            $(".question").show()
+            $(".question").html("<h2>" + triviaQuestions[currentQuestion].question + "</h2>");
+            for (var i = 0; i < 4; i++) {
+                var choices = $("<button>");
+                choices.text(triviaQuestions[currentQuestion].answersList[i]);
+                choices.attr({ "data-index": i }); //counts off 4 buttons using the for loop
+                choices.addClass("thisChoice"); //adds a class which connects the user to their choice in the countdown bleow
+                choices.addClass("btn btn-info"); // adds bootstrap button styling
                 choices.attr("type", "radio"); //adds bootstrap radio button
                 choices.attr("name", "options");
-                choices.attr("autocomplete", "off"); 
-      
-             $(".answerList").append(choices); //sends the answers to the DOM
+                choices.attr("autocomplete", "off");
+                $(".answerList").append(choices); //sends the answers to the DOM
 
-           
+            }
 
+            countdown();
+            //clicking an answer will pause the time and setup answerPage
+            $(".thisChoice").on("click", function () {
+                userSelect = $(this).data("index");
+                clearInterval(time);
+                answerPage();
+            });
         }
 
+                function countdown() {
+                    seconds = 15;
+                    $("#timeLeft").show();
+                    $('#timeLeft').html('<h3>Time Remaining: ' + seconds + '</h3>');
+                    answered = true;
+                    //sets timer to go down
+                    time = setInterval(showCountdown, 1000);
+                }
 
-        countdown();
-        //clicking an answer will pause the time and setup answerPage
-        $(".thisChoice").on("click", function () {
-            userSelect = $(this).data("index");
-            clearInterval(time);
-            answerPage();
-        });
-    }
+                function showCountdown() {
+                    seconds--;
+                    $("#timeLeft").html("<h3>Time Remaining: " + seconds + "</h3>");
+                    if (seconds < 1) {
+                        clearInterval(time);
+                        answered = false;
+                        answerPage();
+                    }
+                }
 
-            function countdown() {
-                seconds = 30;
-                $("#timeLeft").show();
-                $('#timeLeft').html('<h3>Time Remaining: ' + seconds + '</h3>');
+        function answerPage() {
+            $("#currentQuestion").empty();
+            $(".thisChoice").empty(); //Clears question page
+            $(".question").empty();
+            $(".answerList").empty();
+
+            var rightAnswerText = triviaQuestions[currentQuestion].answersList[triviaQuestions[currentQuestion].answer];
+            var rightAnswerIndex = triviaQuestions[currentQuestion].answer;
+            //$('#gif').html('<img src = "assets/images/'+ gifArray[currentQuestion] +'.gif" width = "400px">');
+            //checks to see correct, incorrect, or unanswered
+            if ((userSelect == rightAnswerIndex) && (answered == true)) {
+                correctAnswer++;
+                $('#message').html(messages.correct);
+            } else if ((userSelect != rightAnswerIndex) && (answered == true)) {
+                incorrectAnswer++;
+                $('#message').html(messages.incorrect);
+                $('#correctedAnswer').html('The correct answer was: ' + rightAnswerText);
+            } else {
+                unanswered++;
+                $('#message').html(messages.endTime);
+                $('#correctedAnswer').html('The correct answer was: ' + rightAnswerText);
                 answered = true;
-                //sets timer to go down
-                time = setInterval(showCountdown, 1000);
             }
 
-            function showCountdown() {
-                seconds--;
-                $('#timeLeft').html('<h3>Time Remaining: ' + seconds + '</h3>');
-                if (seconds < 1) {
-                    clearInterval(time);
-                    answered = false;
-                    answerPage();
-                }
+            if (currentQuestion == (triviaQuestions.length - 1)) {
+                setTimeout(scoreboard, 5000)
+            } else {
+                currentQuestion++;
+                setTimeout(newQuestion, 5000);
             }
+        }
 
-                function answerPage() {
-                    $('#currentQuestion').empty();
-                    $('.thisChoice').empty(); //Clears question page
-                    $('.question').empty();
-
-                    var rightAnswerText = triviaQuestions[currentQuestion].answersList[triviaQuestions[currentQuestion].answer];
-                    var rightAnswerIndex = triviaQuestions[currentQuestion].answer;
-                    //$('#gif').html('<img src = "assets/images/'+ gifArray[currentQuestion] +'.gif" width = "400px">');
-                    //checks to see correct, incorrect, or unanswered
-                    if ((userSelect == rightAnswerIndex) && (answered == true)) {
-                        correctAnswer++;
-                        $('#message').html(messages.correct);
-                    } else if ((userSelect != rightAnswerIndex) && (answered == true)) {
-                        incorrectAnswer++;
-                        $('#message').html(messages.incorrect);
-                        $('#correctedAnswer').html('The correct answer was: ' + rightAnswerText);
-                    } else {
-                        unanswered++;
-                        $('#message').html(messages.endTime);
-                        $('#correctedAnswer').html('The correct answer was: ' + rightAnswerText);
-                        answered = true;
-                    }
-
-                    if (currentQuestion == (triviaQuestions.length - 1)) {
-                        setTimeout(scoreboard, 5000)
-                    } else {
-                        currentQuestion++;
-                        setTimeout(newQuestion, 5000);
-                    }
-                }
-
-    function scoreboard() {
-        $('#timeLeft').empty();
-        $('#message').empty();
-        $('#correctedAnswer').empty();
-        //$('#gif').empty();
-        $('#finalMessage').html(messages.finished);
-        $('#correctAnswers').html("Correct Answers: " + correctAnswer);
-        $('#incorrectAnswers').html("Incorrect Answers: " + incorrectAnswer);
-        $('#unanswered').html("Unanswered: " + unanswered);
-        //$('#startOverBtn').addClass('reset');
-        //$('#startOverBtn').show();
-        //$('#startOverBtn').html('Start Over?');
-    }
+        function scoreboard() {
+            $('#timeLeft').empty();
+            $('#message').empty();
+            $('#correctedAnswer').empty(); 
+            $("#resetBtn").show(); //make the reset button available    
+            //$('#gif').empty();
+            $('#finalMessage').html(messages.finished);
+            $('#correctAnswers').html("Correct Answers: " + correctAnswer);
+            $('#incorrectAnswers').html("Incorrect Answers: " + incorrectAnswer);
+            $('#unanswered').html("Unanswered: " + unanswered);
+        }
 
 }); //ending bracket for $(document).ready(function() - do not touch!!!
 

@@ -19,7 +19,6 @@
     color: white !important;
     top: -1px;
     
-   
 }
 
 .navbar-brand {
@@ -50,8 +49,6 @@ li {
 }
 
 
-
-
 /*----------- Code dedicated to duplicating the look and body of the example page WITH Bootstrap: ----------------*/
 #me {
     height: 200px;
@@ -60,17 +57,12 @@ li {
 }
 
 
-
-
-
 h1, h2, h3, h4, h5, h6 {
     font-family: Georgia, 'Times New Roman', Times, serif;
     color: #4aaaa5;
     font-weight: 1000;
     
 }
-
-
 
 hr {
     background-color: #cccccc;
@@ -138,12 +130,6 @@ div.content {
 }
 
 
-
-
-
-
-
-
 /*---- Now some coding for replicating the look of the footer----*/
 
 .footer {
@@ -176,12 +162,6 @@ div.content {
     padding-right: 10px;
     
 }
-
-
-
-
-
-
 
 
 /* Now some coding for the OTHER pages --- starting with the contact.html page */
@@ -256,4 +236,7 @@ textarea {
     
 }
 
+.thisChoice {
+    margin: 10px;
 
+}
