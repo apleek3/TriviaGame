@@ -32,7 +32,7 @@ var triviaQuestions = [
 
 ]
 
-//var gifArray = ["question1", "question2", "question3", "question4", "question5", "question6", "question7"];
+var gifArray = ["question1", "question2", "question3", "question4", "question5", "question6", "question7"];
 var currentQuestion;
 var correctAnswer;
 var incorrectAnswer;
@@ -49,7 +49,7 @@ var messages = {
     finished: "How did you do?"
 }
 
-//start of the document. let"s get it ON!
+//start of the document
 $(document).ready(function () {
     $("#resetBtn").hide(); //hide the reset button until the game starts
     $(".answerList").hide();
@@ -71,7 +71,7 @@ $(document).ready(function () {
         $("#scoreboard").empty();
     });
 
-    function startGame() {
+    function startGame() { //sets everything to 0 and empties all the divs
         $("#finalMessage").empty();
         $("#correctAnswers").empty();
         $("#incorrectAnswers").empty();
@@ -83,10 +83,10 @@ $(document).ready(function () {
         newQuestion();
     }
 
-        function newQuestion() {
+        function newQuestion() { //empties out everything making it ready for a new question to appear
             $("#message").empty();
             $("#correctedAnswer").empty();
-            //$("#gif").empty()
+            $("#gif").empty()
             answered = true;
 
             //sets up new question & answersList
@@ -103,7 +103,7 @@ $(document).ready(function () {
                 choices.attr("type", "radio"); //adds bootstrap radio button
                 choices.attr("name", "options");
                 choices.attr("autocomplete", "off");
-                $(".answerList").append(choices); //sends the answers to the DOM
+                $(".answerList").append(choices); //sends the answers to the page
 
             }
 
@@ -143,7 +143,7 @@ $(document).ready(function () {
 
             var rightAnswerText = triviaQuestions[currentQuestion].answersList[triviaQuestions[currentQuestion].answer];
             var rightAnswerIndex = triviaQuestions[currentQuestion].answer;
-            //$('#gif').html('<img src = "assets/images/'+ gifArray[currentQuestion] +'.gif" width = "400px">');
+            $('#gif').html('<img src = "assets/images/'+ gifArray[currentQuestion] +'.gif" width = "400px">');
             //checks to see correct, incorrect, or unanswered
             if ((userSelect == rightAnswerIndex) && (answered == true)) {
                 correctAnswer++;
@@ -172,7 +172,7 @@ $(document).ready(function () {
             $('#message').empty();
             $('#correctedAnswer').empty(); 
             $("#resetBtn").show(); //make the reset button available    
-            //$('#gif').empty();
+            $('#gif').empty();
             $('#finalMessage').html(messages.finished);
             $('#correctAnswers').html("Correct Answers: " + correctAnswer);
             $('#incorrectAnswers').html("Incorrect Answers: " + incorrectAnswer);

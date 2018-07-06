@@ -126,6 +126,11 @@ div.content {
     position: relative; 
     background-color: #ffffff !important;
     margin: 0 auto;
+    background-image: url("../images/sac.jpg");
+    
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
    
 }
 
@@ -236,7 +241,66 @@ textarea {
     
 }
 
+
+/****************************STYLING FOR THE TRIVIA GAME************************************/
+.transparent {
+    opacity: 0.9;
+}
+
+
 .thisChoice {
     margin: 10px;
 
+}
+
+#finalMessage {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: #4aaaa5;
+    font-weight: 1000;
+    font-size: 24px;
+}
+
+#correctAnswers {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: #4aaaa5;
+    font-weight: 1000;
+    font-size: 24px;
+}
+
+#incorrectAnswers {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: #4aaaa5;
+    font-weight: 1000;
+    font-size: 24px;
+}
+#unanswered {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: #4aaaa5;
+    font-weight: 1000;
+    font-size: 24px;
+}
+
+#correctedAnswer {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: #4aaaa5;
+    font-weight: 1000;
+    font-size: 24px;
+}
+
+#message {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: #4aaaa5;
+    font-weight: 1000;
+    font-size: 24px;
+}
+
+#currentQuestion {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: #4aaaa5;
+    font-weight: 1000;
+    font-size: 24px;
+}
+
+.spacer {
+    position: relative;
 }
