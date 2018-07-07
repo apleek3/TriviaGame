@@ -171,8 +171,10 @@ $(document).ready(function () {
             $('#timeLeft').empty();
             $('#message').empty();
             $('#correctedAnswer').empty(); 
-            $("#resetBtn").show(); //make the reset button available    
             $('#gif').empty();
+
+            $("#resetBtn").show(); //make the reset button available    
+            
             $('#finalMessage').html(messages.finished);
             $('#correctAnswers').html("Correct Answers: " + correctAnswer);
             $('#incorrectAnswers').html("Incorrect Answers: " + incorrectAnswer);
